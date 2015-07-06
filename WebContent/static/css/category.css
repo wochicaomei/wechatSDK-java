@@ -1,0 +1,43 @@
+.category_form {
+	margin-top: 10px;
+}
+
+.category_ul {
+	list-style: none;
+	margin-left: -40px;
+	display: inline-block;
+	width: 1100px;
+	margin-bottom: -10px;
+}
+
+.category_ul li {
+	float: left;
+	margin-right: 12px;
+	margin-bottom: 12px;
+}
+
+.category_div {
+	width: 325px;
+	height: 200px;
+	position: relative;
+	border: 1px solid rgb(102, 102, 102);
+}
+
+.img_play {
+	position: absolute;
+	top: 50px;
+	left: 130px;
+}
+
+.black_div {
+	background: black;
+	width: 323px;
+	height: 25px;
+	position: absolute;
+	bottom: 0px;
+	line-height: 25px;
+}
+
+.black_div img {
+	margin-left: 10px;
+}

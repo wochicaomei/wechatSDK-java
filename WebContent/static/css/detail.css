@@ -1,0 +1,286 @@
+/* 重写bootstrap css */
+.pagination {
+	position: absolute;
+	z-index: 20;
+	bottom: 10px;
+	width: 100%;
+	text-align: center;
+}
+
+.swiper-pagination-switch {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 8px;
+	background: #555;
+	margin: 0 5px;
+	opacity: 0.8;
+	border: 1px solid #fff;
+	cursor: pointer;
+}
+
+.swiper-active-switch {
+	background: #fff;
+}
+/* 聊天室页面css代码 */
+.room_name {
+	color: white;
+}
+
+#main_top {
+	margin-top: 20px;
+}
+
+#main_top_left {
+	width: 1000px;
+}
+
+#banner {
+	margin-top: 10px;
+	height: 420px;
+}
+
+#main_top_right {
+	width: 260px;
+	float: right;
+}
+
+#main_middle {
+	margin-top: 50px;
+}
+
+#main_bottom {
+	margin-top: 20px;
+}
+/* 评论列表 */
+.comment_div {
+	width: 725px;
+	min-height: 450px;
+	margin-top: 10px;
+}
+
+#tab-content {
+	width: 725px;
+	min-height: 450px;
+	background: white;
+}
+
+.comment_input_div {
+	text-align: center;
+}
+
+.comment_text {
+	width: 700px;
+	height: 100px;
+	margin-top: 15px;
+}
+
+.comment_opt {
+	line-height: 30px;
+}
+
+.comment_opt a:hover,.comment_opt a:active {
+	color: white;
+	background-color: rgb(252, 199, 0);
+	border-color: rgb(252, 199, 0);
+}
+
+.opt_comment {
+	float: right;
+	margin-right: 12px;
+}
+
+.opt_comment .remain_num {
+	color: #1083f6;
+}
+
+.opt_comment a {
+	margin-left: 15px;
+}
+
+.btn-comment {
+	color: #fff;
+	background-color: rgb(252, 199, 0);
+	border-color: rgb(252, 199, 0);
+	width: 94px;
+	height: 29px;
+	vertical-align: middle;
+	line-height: 1;
+}
+
+.icon_face {
+	margin-left: 30px;
+}
+
+.icon_face_add {
+	vertical-align: sub;
+}
+
+.rec {
+	margin-left: 10px;
+	vertical-align: sub;
+}
+
+.comment_list_div {
+	margin-top: 20px;
+}
+/* 用户评论 */
+.user_comment_div {
+	margin: 20px 0 30px 0;
+}
+
+.user_name {
+	color: #1083f6;
+}
+
+.user_icon {
+	float: left;
+	padding-right: 10px;
+}
+
+.user_comment_content {
+	margin-top: 15px;
+}
+
+.user_comment_opt {
+	color: #1083f6;
+}
+
+.agree_num {
+	color: #ccc;
+}
+
+.floor {
+	color: rgb(252, 199, 0);
+	float: right;
+}
+
+.user_comment_opt {
+	float: right;
+}
+
+.page {
+	text-align: center;
+}
+
+.page a {
+	margin: 0 12px;
+}
+
+.chat_category_form {
+	margin-top: 10px;
+}
+
+.chat_category_ul {
+	list-style: none;
+	margin-left: -40px;
+	display: inline-block;
+	width: 1052px;
+	margin-bottom: -10px;
+}
+
+.chat_category_ul li {
+	float: left;
+	margin-right: 12px;
+	margin-bottom: 12px;
+}
+
+.chat_category_div {
+	width: 241px;
+	height: 200px;
+	position: relative;
+	border: 1px solid rgb(102, 102, 102);
+}
+
+.chat_category_img {
+	width: 100%;
+	height: 198px;
+}
+
+.chat_img_play {
+	position: absolute;
+	top: 26%;
+	left: 35%;
+}
+
+.chat_black_div {
+	background: black;
+	width: 100%;
+	height: 25px;
+	position: absolute;
+	bottom: 0px;
+	line-height: 25px;
+}
+
+.category_sort_div {
+	color: white;
+	text-align: center;
+	margin-top: 70px;
+}
+
+.category_sort_div h3 {
+	color: rgb(252, 199, 0);
+	font-weight: 600;
+	text-align: center;
+	font-size:18px;
+}
+
+.category_slide {
+	position: relative;
+}
+
+#prev {
+	position: absolute;
+	top: 81px;
+	left: 15px;
+	cursor: pointer;
+}
+
+#next {
+	position: absolute;
+	top: 81px;
+	right: 15px;
+	cursor: pointer;
+}
+
+.remark_icon_num {
+	margin-left: 10px;
+}
+
+.category_year_div{
+	  width: 990px;
+  height: 116px;
+  margin: -37px auto;
+  border-top: 2px solid rgb(26, 125, 184);
+  position: relative;
+}
+.category_div_one{
+	width: 100px;
+  margin-right: 35px;
+  position: relative;
+  margin-top: -33px;
+}
+.category_year{
+	  width: 70px;
+  height: 21px;
+  margin-left: -3px;
+  padding-left: 3px;
+  padding-top: -1px;
+  font-size: 12px;
+}
+.category_img{
+	  margin-left: -4px;
+  margin-top: 1px;
+}
+.choose{
+	margin-top: -3px;
+  width: 30px;
+  height: 30px;
+}
+.pageline {
+	border-top: 1px solid #ccc;
+}
+
+.mt20 {
+	margin-top: 20px;
+}

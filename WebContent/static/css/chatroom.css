@@ -1,0 +1,331 @@
+/* 重写bootstrap css */
+.comment_div .nav-tabs>li.active>a,.comment_div .nav-tabs>li.active>a:hover,.comment_div .nav-tabs>li.active>a:focus
+	{
+	border-radius: 0px;
+	border-top: 5px solid rgb(252, 199, 0);
+	border-right: 0px;
+	border-bottom: 0px;
+}
+
+.comment_div .nav-tabs {
+	background: #eeeeee;
+	border-bottom: 0px;
+}
+
+.comment_div .nav-tabs>li>a,.comment_div .nav-tabs>li>a:hover,.comment_div .nav-tabs>li>a:focus
+	{
+	border-top: 5px solid #eeeeee;
+	border-radius: 0px;
+	border-bottom: 0px;
+	color: #333;
+}
+
+.chat_div .nav-tabs>li {
+	width: 50%;
+	text-align: center;
+}
+
+.chat_div .nav-tabs>li.active>a,.chat_div .nav-tabs>li.active>a:hover,.chat_div .nav-tabs>li.active>a:focus
+	{
+	border-radius: 0px;
+	border: 0px;
+}
+
+.chat_div .nav-tabs>li>a,.chat_div .nav-tabs>li>a:hover,.chat_div .nav-tabs>li>a:focus
+	{
+	border-radius: 0px;
+	border-bottom: 0px;
+	color: #333;
+}
+
+.chat_div .nav-tabs {
+	background: #eeeeee;
+	border-bottom: 0px;
+}
+
+/* 分页组件样式重写 */
+.pagination>.active>a,.pagination>.active>span,.pagination>.active>a:hover,.pagination>.active>span:hover,.pagination>.active>a:focus,.pagination>.active>span:focus
+	{
+	background-color: rgb(252, 199, 0);
+	border-color: rgb(252, 199, 0);
+	border-radius: 5px;
+}
+
+.pagination>li>a,.pagination>li>span {
+	color: #333;
+	background-color: #eeeeee;
+	border-radius: 5px;
+}
+
+/* 聊天室页面css代码 */
+.room_name {
+	color: white;
+}
+
+.chat_div {
+	height: 450px;
+	background: #000;
+	background: white;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+}
+
+.chat_ad {
+	width: 260px;
+	height: 133px;
+	margin-top: 10px;
+}
+
+.chat {
+	padding: 7px 0px 0px 11px;
+}
+
+.video_ad {
+	width: 725px;
+	height: 154px;
+	margin-top: 38px;
+}
+
+.notice_div {
+	width: 100%;
+	min-height: 20px;
+	text-align: center;
+	padding: 10px;
+}
+
+.chatlist {
+	background: #ccc;
+	height: 240px;
+	overflow-y: auto;
+}
+
+.chat_input {
+	height: 126px;
+	background: #e4e4e4;
+	padding: 0 1em;
+}
+
+.chat_input_div {
+	
+}
+
+.chat_input_face {
+	margin: 10px 0;
+}
+
+.chat_text {
+	width: 190px;
+	height: 74px;
+	border: 2px solid rgb(252, 199, 0);
+}
+
+.btn-chat {
+	width: 40px;
+	background: rgb(252, 199, 0);
+	height: 74px;
+	margin-left: -3px;
+	color: white;
+}
+
+.btn_chat_text {
+	width: 1px;
+	padding: 18px 0 0 13px;
+}
+
+.participant_div {
+	height: 240px;
+	overflow-y: auto;
+	padding: 7px 0px 0px 11px;
+}
+
+#main_top {
+	margin-top: 20px;
+}
+
+#main_top_left {
+	width: 725px;
+}
+
+#banner {
+	margin-top: 10px;
+	height: 420px;
+}
+
+#main_top_right {
+	width: 260px;
+	float: right;
+}
+
+#main_bottom {
+	margin-top: 20px;
+}
+/* 评论列表 */
+.comment_div {
+	width: 725px;
+	min-height: 450px;
+	margin-top: 10px;
+}
+
+#tab-content {
+	width: 725px;
+	min-height: 450px;
+	background: white;
+}
+
+.comment_input_div {
+	text-align: center;
+}
+
+.comment_text {
+	width: 700px;
+	height: 100px;
+	margin-top: 15px;
+}
+
+.comment_opt {
+	line-height: 30px;
+}
+
+.comment_opt a:hover,.comment_opt a:active {
+	color: white;
+	background-color: rgb(252, 199, 0);
+	border-color: rgb(252, 199, 0);
+}
+
+.opt_comment {
+	float: right;
+	margin-right: 12px;
+}
+
+.opt_comment .remain_num {
+	color: #1083f6;
+}
+
+.opt_comment a {
+	margin-left: 15px;
+}
+
+.btn-comment {
+	color: #fff;
+	background-color: rgb(252, 199, 0);
+	border-color: rgb(252, 199, 0);
+	width: 94px;
+	height: 29px;
+	vertical-align: middle;
+	line-height: 1;
+}
+
+.icon_face {
+	margin-left: 30px;
+}
+
+.icon_face_add {
+	vertical-align: sub;
+}
+
+.rec {
+	margin-left: 10px;
+	vertical-align: sub;
+}
+
+.comment_list_div {
+	margin-top: 20px;
+}
+/* 用户评论 */
+.user_comment_div {
+	margin: 20px 0 30px 0;
+}
+
+.user_name {
+	color: #1083f6;
+}
+
+.user_icon {
+	float: left;
+	padding-right: 10px;
+}
+
+.user_comment_content {
+	margin-top: 15px;
+}
+
+.user_comment_opt {
+	color: #1083f6;
+}
+
+.agree_num {
+	color: #ccc;
+}
+
+.floor {
+	color: rgb(252, 199, 0);
+	float: right;
+}
+
+.user_comment_opt {
+	float: right;
+}
+
+.page {
+	text-align: center;
+}
+
+.page a {
+	margin: 0 12px;
+}
+
+.chat_category_form {
+	margin-top: 10px;
+}
+
+.chat_category_ul {
+	list-style: none;
+	margin-left: -40px;
+	display: inline-block;
+	width: 810px;
+	margin-bottom: -10px;
+}
+
+.chat_category_ul li {
+	float: left;
+	margin-right: 12px;
+	margin-bottom: 12px;
+}
+
+.chat_category_div {
+	width: 234px;
+	height: 200px;
+	position: relative;
+	border: 1px solid rgb(102, 102, 102);
+}
+
+.chat_category_img {
+	width: 232px;
+	height: 198px;
+}
+
+.chat_img_play {
+	position: absolute;
+	top: 50px;
+	left: 82px;
+}
+
+.chat_black_div {
+	background: black;
+	width: 232px;
+	height: 25px;
+	position: absolute;
+	bottom: 0px;
+	line-height: 25px;
+}
+
+.remark_icon_num {
+	margin-left: 10px;
+}
+
+.pageline {
+	border-top: 1px solid #ccc;
+}
+
+.mt20 {
+	margin-top: 20px;
+}

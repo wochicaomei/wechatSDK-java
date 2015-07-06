@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info">
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n" />
+		</Console>
+
+		<Failover name="Failover" primary="Console" suppressExceptions="false">
+			<Failovers>
+				<appender-ref ref="Console" />
+			</Failovers>
+		</Failover>
+	</appenders>
+
+	<loggers>
+		<root level="info">
+			<appender-ref ref="Console" />
+		</root>
+	</loggers>
+</configuration>

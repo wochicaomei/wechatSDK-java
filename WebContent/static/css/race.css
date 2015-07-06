@@ -1,0 +1,9 @@
+.main_category {
+	margin-top: 20px;
+}
+
+.category_tool a {
+	float: right;
+	color: orange;
+	margin-top: 20px;
+}

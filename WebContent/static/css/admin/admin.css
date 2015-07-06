@@ -1,0 +1,40 @@
+body {
+	background: #f5f5f5;
+}
+
+#main {
+	padding: 10px;
+}
+
+#form1 {
+	width: 400px;
+}
+
+._seq {
+	width: 30px;
+}
+
+._check {
+	width: 20px;
+}
+
+._action {
+	width: 220px;
+}
+
+#panel {
+	width: 600px;
+}
+
+.datagrid_header {
+	font-weight: bold;
+}
+
+.table>tbody>tr>td {
+	vertical-align: inherit;
+}
+
+.navbar-inverse .navbar-nav>.active_drop>a, .navbar-inverse .navbar-nav>.active_drop>a:HOVER, .navbar-inverse .navbar-nav>.active_drop>a:FOCUS {
+	color: #fff;
+	background-color: #080808;
+}

@@ -1,0 +1,66 @@
+@import url("head.css");
+
+@import url("foot.css");
+
+body {
+	background: url("image/main/bg.jpg") center top repeat-y;
+	font-family: Microsoft Yahei, "宋体";
+	font-size: 13px;
+	margin: 0;
+}
+
+#container {
+	width: 1000px;
+	height: 100%;
+	margin: 0 auto;
+}
+
+#main {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+/* placeholder */
+input, textarea {
+	color: #000;
+}
+
+.placeholder {
+	color: #aaa;
+}
+
+/* ui css */
+.inlineblock {
+	display: inline-block;
+	*display: inline;
+	zoom: 1;
+	vertical-align: top;
+}
+
+.bg_div {
+	height: 36px;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 18px;
+	padding-top: 6px;
+	text-align: center;
+}
+
+.bg_160_36 {
+	width: 160px;
+	background: url("image/main/bg_label160x36.png");
+}
+
+.bg_200_36 {
+	width: 200px;
+	background: url("image/main/bg_label200x36.png");
+}
+
+.ui_content {
+	padding: 0 2em;
+}
+
+/* bootstrap reset */
+.btn {
+	border-radius: 0px !important;
+}

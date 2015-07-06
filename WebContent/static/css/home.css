@@ -1,0 +1,63 @@
+#main_top {
+	margin-top: 20px;
+}
+
+#main_top_left {
+	width: 750px;
+}
+
+#banner {
+	margin-top: 10px;
+	height: 420px;
+}
+
+#main_top_right {
+	width: 235px;
+	float: right;
+}
+
+#more_hot {
+	position: absolute;
+	bottom: 0px;
+	color: orange;
+}
+
+#hot_div {
+	margin-top: 10px;
+	height: 420px;
+	background: #000;
+	background: rgba(21, 19, 19, 0.75);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+	padding-top: 6px;
+}
+
+.hot_race {
+	width: 225px;
+	height: 127px;
+	margin: 0 auto;
+	margin-bottom: 14px;
+	padding-top: 30px;
+	text-align: center;
+}
+
+#main_bottom {
+	margin-top: 20px;
+}
+
+#select_div {
+	float: right;
+	width: 225px;
+	height: 30px;
+	line-height: 27px;
+	border: 1px solid rgb(251, 197, 0);
+	margin-top: 6px;
+	font-size: 14px;
+	color: rgb(251, 197, 0);
+	padding-left: 5px;
+}
+
+#select_mod img {
+	float: right;
+	margin-right: 5px;
+	margin-top: 10px;
+}
