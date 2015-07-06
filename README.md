@@ -1,0 +1,2 @@
+# wechatSDK-java
+基于SpringMVC的一个wechatSDK。其中的wechatSDK参考了github上的代码。并在此基础上，根据公司的业务添加了微信卡券功能，以及一套代码支持多个微信号。
