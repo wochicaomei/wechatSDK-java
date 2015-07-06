@@ -1,13 +1,14 @@
-package com.bbeerr.wechat.serv.service;
+package com.bbeerr.wechat.base.service.impl;
 
-import java
-.io.UnsupportedEncodingException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
 
+import com.bbeerr.wechat.base.service.IOAuthService;
 import com.bbeerr.wechat.base.util.StringUtil;
 import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.entity.AccessTokenOAuth;
@@ -15,19 +16,21 @@ import com.bbeerr.wechat.entity.user.UserWeiXin;
 
 /**
  * oAuth服务
+ * 
  * @author caspar.chen
  * @version 1.0
  * 
  */
-public class OAuthService {
+@Service
+public class OAuthServiceImpl implements IOAuthService{
 
-	public static Logger log = Logger.getLogger(OAuthService.class);
-	
+	public static Logger log = Logger.getLogger(OAuthServiceImpl.class);
+
 	/**
 	 * wechat oauth url
 	 */
-	public static String OAUTH = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
-	
+	public  String OAUTH = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+
 	/**
 	 * 通过oauth获取用户详细信息
 	 */
@@ -38,28 +41,27 @@ public class OAuthService {
 	 */
 	public static String GET_ACCESS_TOKEN_OAUTH = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 
-	
 	/**
 	 * 获得Oauth认证的URL
-	 * @param redirectUrl	跳转的url
-	 * @param charset	字符集格式
-	 * @param scope	OAUTH scope
+	 * 
+	 * @param redirectUrl
+	 *            跳转的url
+	 * @param charset
+	 *            字符集格式
+	 * @param scope
+	 *            OAUTH scope
 	 * @return oauth url
 	 */
-	public static String getOauthUrl(String appid,String redirectUrl,String charset,String scope){
+	public  String getOauthUrl(String appid, String redirectUrl, String charset, String scope) {
 		String url = "";
 		try {
-			url = OAUTH
-					.replace("APPID", appid)
-					.replace("REDIRECT_URI",
-							URLEncoder.encode(redirectUrl, charset))
-					.replace("SCOPE", scope);
+			url = OAUTH.replace("APPID", appid).replace("REDIRECT_URI", URLEncoder.encode(redirectUrl, charset)).replace("SCOPE", scope);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		return url;
 	}
-	
+
 	/**
 	 * 获取Access_Token（oAuth认证,此access_token与基础支持的access_token不同）
 	 * 
@@ -67,29 +69,21 @@ public class OAuthService {
 	 *            用户授权后得到的code
 	 * @return AccessTokenOAuth对象
 	 */
-	public static AccessTokenOAuth getOAuthAccessToken(String appid,String appsecret,String code) {
-		String url = GET_ACCESS_TOKEN_OAUTH
-				.replace("APPID", appid)
-				.replace("SECRET", appsecret)
-				.replace("CODE", code);
+	public  AccessTokenOAuth getOAuthAccessToken(String appid, String appsecret, String code) {
+		String url = GET_ACCESS_TOKEN_OAUTH.replace("APPID", appid).replace("SECRET", appsecret).replace("CODE", code);
 
 		JSONObject jsonObject = WeixinUtil.httpsRequest(url, "POST", null);
 
 		AccessTokenOAuth accessTokenOAuth = null;
 
 		if (null != jsonObject) {
-			if (StringUtil.isNotEmpty(jsonObject.get("errcode"))
-					&& jsonObject.get("errcode") != "0") {
-				log.error("获取access_token失败 errcode:"
-						+ jsonObject.getInt("errcode") + "，errmsg:"
-						+ jsonObject.getString("errmsg"));
+			if (StringUtil.isNotEmpty(jsonObject.get("errcode")) && jsonObject.get("errcode") != "0") {
+				log.error("获取access_token失败 errcode:" + jsonObject.getInt("errcode") + "，errmsg:" + jsonObject.getString("errmsg"));
 			} else {
 				accessTokenOAuth = new AccessTokenOAuth();
-				accessTokenOAuth.setAccessToken(jsonObject
-						.getString("access_token"));
+				accessTokenOAuth.setAccessToken(jsonObject.getString("access_token"));
 				accessTokenOAuth.setExpiresIn(jsonObject.getInt("expires_in"));
-				accessTokenOAuth.setRefreshToken(jsonObject
-						.getString("refresh_token"));
+				accessTokenOAuth.setRefreshToken(jsonObject.getString("refresh_token"));
 				accessTokenOAuth.setOpenid(jsonObject.getString("openid"));
 				accessTokenOAuth.setScope(jsonObject.getString("scope"));
 			}
@@ -104,21 +98,17 @@ public class OAuthService {
 	 * @param openid
 	 * @return UserWeiXin对象
 	 */
-	public static UserWeiXin getUserInfoOauth(String token, String openid) {
+	public  UserWeiXin getUserInfoOauth(String token, String openid) {
 		UserWeiXin user = null;
 		if (token != null) {
 
-			String url = GET_USER_INFO_OAUTH.replace("ACCESS_TOKEN", token)
-					.replace("OPENID", openid);
+			String url = GET_USER_INFO_OAUTH.replace("ACCESS_TOKEN", token).replace("OPENID", openid);
 
 			JSONObject jsonObject = WeixinUtil.httpsRequest(url, "POST", null);
 
 			if (null != jsonObject) {
-				if (StringUtil.isNotEmpty(jsonObject.get("errcode"))
-						&& jsonObject.get("errcode") != "0") {
-					log.error("获取用户信息失败 errcode:"
-							+ jsonObject.getInt("errcode") + "，errmsg:"
-							+ jsonObject.getString("errmsg"));
+				if (StringUtil.isNotEmpty(jsonObject.get("errcode")) && jsonObject.get("errcode") != "0") {
+					log.error("获取用户信息失败 errcode:" + jsonObject.getInt("errcode") + "，errmsg:" + jsonObject.getString("errmsg"));
 				} else {
 					user = new UserWeiXin();
 					user.setOpenid(jsonObject.getString("openid"));

@@ -9,6 +9,7 @@
 
 	<import resource="classpath:spring-db.xml" />
 	<import resource="classpath:spring-core.xml" />
+	<import resource="classpath:quart-job.xml"/>
 
 	<context:annotation-config />
 	<aop:aspectj-autoproxy />

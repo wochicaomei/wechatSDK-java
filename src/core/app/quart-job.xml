@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+
+	<!-- 服务号定时器 begin -->
+	<!-- 微信基础接口access_token 每隔7200秒刷新的定时器 -->
+	<bean id="servAccessToken" class="com.bbeerr.wechat.serv.job.WechatServiceJob"></bean>
+	<bean id="servTokenRefresh" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="servAccessToken" />
+		<property name="targetMethod" value="run" />
+	</bean>
+	<bean id="triggerT" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="servTokenRefresh" />
+		<property name="startDelay" value="0" /><!-- 设置延迟0秒执行 -->
+		<property name="repeatInterval" value="7200000" /><!-- 设置每7200秒触发一次 -->
+	</bean>
+
+	<!-- 微信基础接口api_ticket jsapi_ticket 每隔7200秒刷新的定时器 -->
+	<bean id="servTicket" class="com.bbeerr.wechat.serv.job.WechatServiceJob"></bean>
+	<bean id="servTicketRefresh" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="servTicket" />
+		<property name="targetMethod" value="run2" />
+	</bean>
+	<bean id="triggerA" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="servTicketRefresh" />
+		<property name="startDelay" value="8000" />
+		<property name="repeatInterval" value="7200000" />
+	</bean>
+	<!-- 服务号定时器 end -->
+
+	<!-- 订阅号号定时器 begin -->
+	<!-- 微信基础接口access_token 每隔7200秒刷新的定时器 -->
+	<bean id="subAccessToken" class="com.bbeerr.wechat.subs.job.WechatSubscribeJob"></bean>
+	<bean id="subTokenRefresh" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="subAccessToken" />
+		<property name="targetMethod" value="run" />
+	</bean>
+	<bean id="triggerST" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="subTokenRefresh" />
+		<property name="startDelay" value="0" />
+		<property name="repeatInterval" value="7200000" /><!-- 设置每7200秒触发一次 -->
+	</bean>
+
+	<!-- 微信基础接口api_ticket jsapi_ticket 每隔7200秒刷新的定时器 -->
+	<bean id="ticket" class="com.bbeerr.wechat.subs.job.WechatSubscribeJob"></bean>
+	<bean id="ticketRefresh" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="ticket" />
+		<property name="targetMethod" value="run2" />
+	</bean>
+	<bean id="triggerS" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="ticketRefresh" />
+		<property name="startDelay" value="8000" />
+		<property name="repeatInterval" value="7200000" />
+	</bean>
+	<!-- 订阅号定时器 end -->
+
+
+	<!-- 定时器列表 -->
+	<bean autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref local="triggerT" />
+				<ref local="triggerST" />
+				<ref local="triggerA" />
+				<ref local="triggerS" />
+			</list>
+		</property>
+	</bean>
+
+</beans>

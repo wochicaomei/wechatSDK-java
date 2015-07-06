@@ -7,10 +7,10 @@ import org.apache.log4j.Logger;
 
 import net.sf.json.JSONObject;
 
+import com.bbeerr.wechat.base.util.StringUtil;
+import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.entity.AccessTokenOAuth;
 import com.bbeerr.wechat.entity.user.UserWeiXin;
-import com.bbeerr.wechat.util.StringUtil;
-import com.bbeerr.wechat.util.WeixinUtil;
 
 /**
  * oAuth服务

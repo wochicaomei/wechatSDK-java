@@ -1,4 +1,4 @@
-package com.bbeerr.wechat.subs.service;
+package com.bbeerr.wechat.base.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,13 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
+import com.bbeerr.wechat.base.service.ICardService;
 import com.bbeerr.wechat.base.util.FileUtil;
 import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.subs.constants.ConstantsSubscribe;
 
-public class CardService {
-	public static Logger log = Logger.getLogger(CardService.class);
+@Service
+public class CardServiceImpl implements ICardService {
+	public static Logger log = Logger.getLogger(CardServiceImpl.class);
 	/**
 	 * 创建卡券接口
 	 */
@@ -56,7 +59,7 @@ public class CardService {
 	 * @param access_token 
 	 * @return
 	 */
-	public static JSONObject createCard(String jsonCard , String access_token){
+	public  JSONObject createCard(String jsonCard , String access_token){
 		int result = 0;
 		JSONObject jsonObject = new JSONObject();
 		if (access_token != null) {
@@ -85,7 +88,7 @@ public class CardService {
 	 * @param request
 	 * @return
 	 */
-	public static  JSONObject getCardCode(HttpServletRequest request,String code,String access_token){
+	public   JSONObject getCardCode(HttpServletRequest request,String code,String access_token){
 		int result = 0;
 		String requestUrl = code_url.replace("TOKEN", access_token);
 		JSONObject post_data = new JSONObject();
@@ -107,7 +110,7 @@ public class CardService {
 	 * @param cardId
 	 * @return
 	 */
-	public static JSONObject getCardInfo(HttpServletRequest request,String cardId,String access_token){
+	public  JSONObject getCardInfo(HttpServletRequest request,String cardId,String access_token){
 		int result = 0;
 		String requestUrl = code_detail_url.replace("TOKEN", access_token);
 		JSONObject post_data = new JSONObject();
@@ -128,7 +131,7 @@ public class CardService {
 	 * @param code
 	 * return 0 表示核销成功
 	 */
-	public static Integer destroyCode(HttpServletRequest request,String code,String card_id, String access_token){
+	public  Integer destroyCode(HttpServletRequest request,String code,String card_id, String access_token){
 		int result = 0;
 		String requestUrl = destroy_code_url.replace("TOKEN", access_token);
 		JSONObject post_data = new JSONObject();
@@ -151,7 +154,7 @@ public class CardService {
 	 * @param access_token
 	 * @return code
 	 */
-	public static String decrypt_code(HttpServletRequest request , String encrypt_code , String access_token){
+	public  String decrypt_code(HttpServletRequest request , String encrypt_code , String access_token){
 		String code =  null;
 		String requestUrl = decrypt_code_url.replace("TOKEN", access_token);
 		JSONObject post_data = new JSONObject();
@@ -173,7 +176,7 @@ public class CardService {
 	 * @param data 包含openid  username:微信号
 	 * @return 0 表示成功 1表示失败
 	 */
-	public static Integer testWhiteList(String access_token ,  String data){
+	public  Integer testWhiteList(String access_token ,  String data){
 		int result = 0;
 		String requestUrl = test_white_url.replace("TOKEN", access_token);
 		JSONObject jsonObject = WeixinUtil.httpsRequest(requestUrl, "POST", data);
@@ -187,9 +190,6 @@ public class CardService {
 		return result;
 	}
 	
-/*	public static void main(String[] args){
-		
-	}*/
 	
 	@SuppressWarnings("unchecked")
 	public static void main(String [] args){
@@ -197,11 +197,11 @@ public class CardService {
 		List<String> urls = new ArrayList<String>();
 		Map<Integer,String> cardList = new HashMap<Integer,String>();
 		List<String> cardIdList = new ArrayList<String>();
-		String card_10_url=CardService.class.getClassLoader().getResource("wechat_card_cash_10.json").toString().replace("file:", "");
-		String card_20_url=CardService.class.getClassLoader().getResource("wechat_card_cash_20.json").toString().replace("file:", "");
-		String card_50_url=CardService.class.getClassLoader().getResource("wechat_card_cash_50.json").toString().replace("file:", "");
-		String card_charge_url=CardService.class.getClassLoader().getResource("wechat_card_charge.json").toString().replace("file:", "");
-		String card_watch_url=CardService.class.getClassLoader().getResource("wechat_card_watch.json").toString().replace("file:", "");
+		String card_10_url=CardServiceImpl.class.getClassLoader().getResource("wechat_card_cash_10.json").toString().replace("file:", "");
+		String card_20_url=CardServiceImpl.class.getClassLoader().getResource("wechat_card_cash_20.json").toString().replace("file:", "");
+		String card_50_url=CardServiceImpl.class.getClassLoader().getResource("wechat_card_cash_50.json").toString().replace("file:", "");
+		String card_charge_url=CardServiceImpl.class.getClassLoader().getResource("wechat_card_charge.json").toString().replace("file:", "");
+		String card_watch_url=CardServiceImpl.class.getClassLoader().getResource("wechat_card_watch.json").toString().replace("file:", "");
 		urls.add(card_10_url);
 		urls.add(card_20_url);
 		urls.add(card_50_url);
@@ -211,10 +211,10 @@ public class CardService {
 			cardList.put(i, WeixinUtil.ReadFile(urls.get(i)));
 			System.out.println(cardList.get(i));
 		}
-		
-		for(int i = 0;i<cardList.size();i++){
-			cardIdList.add(createCard(cardList.get(i) , ConstantsSubscribe.getAccess_token()).toString());
-		}
+//		
+//		for(int i = 0;i<cardList.size();i++){
+//			cardIdList.add(createCard(cardList.get(i) , ConstantsSubscribe.getAccess_token()).toString());
+//		}
 //		System.out.println(createCard(jsonCard , ConstantsSubscribe.getAccess_token()));
 		
 		//测试用户白名单

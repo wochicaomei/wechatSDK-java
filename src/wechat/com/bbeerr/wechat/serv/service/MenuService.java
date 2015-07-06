@@ -4,11 +4,11 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
+import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.entity.menu.Button;
 import com.bbeerr.wechat.entity.menu.Menu;
 import com.bbeerr.wechat.subs.constants.ConstantsSubscribe;
 import com.bbeerr.wechat.subs.controller.WechatSubcribeController;
-import com.bbeerr.wechat.util.WeixinUtil;
 
 /**
  * 菜单创建

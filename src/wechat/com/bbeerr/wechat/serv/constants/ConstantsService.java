@@ -1,6 +1,6 @@
 package com.bbeerr.wechat.serv.constants;
 
-import com.bbeerr.wechat.util.ConfigUtil;
+import com.bbeerr.wechat.base.util.ConfigUtil;
 
 /**
  * 添米微信 服务测试号 常量

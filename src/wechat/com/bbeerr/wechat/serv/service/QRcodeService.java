@@ -7,8 +7,8 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
-import com.bbeerr.wechat.util.StringUtil;
-import com.bbeerr.wechat.util.WeixinUtil;
+import com.bbeerr.wechat.base.util.StringUtil;
+import com.bbeerr.wechat.base.util.WeixinUtil;
 
 /**
  * 二维码

@@ -1,4 +1,4 @@
-package com.bbeerr.wechat.util;
+package com.bbeerr.wechat.base.util;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

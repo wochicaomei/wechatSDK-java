@@ -8,11 +8,11 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
+import com.bbeerr.wechat.base.util.DateFormart;
+import com.bbeerr.wechat.base.util.StringUtil;
+import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.entity.user.UserWeiXin;
 import com.bbeerr.wechat.serv.constants.ConstantsService;
-import com.bbeerr.wechat.util.DateFormart;
-import com.bbeerr.wechat.util.StringUtil;
-import com.bbeerr.wechat.util.WeixinUtil;
 /**
  * 用户管理
  * @author caspar.chen

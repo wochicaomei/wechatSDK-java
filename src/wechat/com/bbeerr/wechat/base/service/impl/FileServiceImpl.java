@@ -1,4 +1,4 @@
-package com.bbeerr.wechat.subs.service;
+package com.bbeerr.wechat.base.service.impl;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -16,7 +16,9 @@ import java.net.URL;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
+import com.bbeerr.wechat.base.service.IFileService;
 import com.bbeerr.wechat.subs.constants.ConstantsSubscribe;
 
 /**
@@ -26,9 +28,10 @@ import com.bbeerr.wechat.subs.constants.ConstantsSubscribe;
  * @version 1.0
  * 
  */
-public class FileService {
+@Service
+public class FileServiceImpl implements IFileService{
 
-	public static Logger log = Logger.getLogger(FileService.class);
+	public static Logger log = Logger.getLogger(FileServiceImpl.class);
 	/**
 	 * 上传logo_url
 	 */
@@ -62,8 +65,7 @@ public class FileService {
 	 *         "nrSKG2eY1E_svLs0Iv2Vvh46PleKk55a47cNO1ZS5_pdiNiSXuijbCmWWc8unzBQ"
 	 *         ,"created_at":1408436207,"type":"image"}
 	 */
-	public static JSONObject uploadLogo(String filePath, String access_token)
-	throws Exception {
+	public  JSONObject uploadLogo(String filePath, String access_token) throws Exception {
 		// 上传文件请求路径
 		String action = logoUrl.replace("TOKEN", access_token);
 		URL url = new URL(action);
@@ -82,16 +84,14 @@ public class FileService {
 		con.setRequestProperty("Charset", "UTF-8");
 		// 设置边界
 		String BOUNDARY = "----------" + System.currentTimeMillis();
-		con.setRequestProperty("Content-Type", "multipart/form-data; boundary="
-		+ BOUNDARY);
+		con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
 		// 请求正文信息
 		// 第一部分：
 		StringBuilder sb = new StringBuilder();
 		sb.append("--"); // 必须多两道线
 		sb.append(BOUNDARY);
 		sb.append("\r\n");
-		sb.append("Content-Disposition: form-data;name=\"file\";filename=\""
-		+ file.getName() + "\"\r\n");
+		sb.append("Content-Disposition: form-data;name=\"file\";filename=\"" + file.getName() + "\"\r\n");
 		sb.append("Content-Type:application/octet-stream\r\n\r\n");
 		byte[] head = sb.toString().getBytes("utf-8");
 		// 获得输出流
@@ -116,8 +116,7 @@ public class FileService {
 		BufferedReader reader = null;
 		try {
 			// 定义BufferedReader输入流来读取URL的响应
-			reader = new BufferedReader(new InputStreamReader(con
-			.getInputStream()));
+			reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String line = null;
 			while ((line = reader.readLine()) != null) {
 				buffer.append(line);
@@ -149,11 +148,9 @@ public class FileService {
 	 *            文件路径
 	 * @return json
 	 */
-	public static JSONObject uploadFile(String fileType, String filename,
-			String filePath, String access_token) {
+	public  JSONObject uploadFile(String fileType, String filename, String filePath, String access_token) {
 
-		String requestUrl = uploadFileUrl.replace("ACCESS_TOKEN", access_token)
-				.replace("TYPE", fileType);
+		String requestUrl = uploadFileUrl.replace("ACCESS_TOKEN", access_token).replace("TYPE", fileType);
 		File file = new File(filePath);
 		String result = "";
 		String end = "\r\n";
@@ -162,22 +159,18 @@ public class FileService {
 		URL submit = null;
 		try {
 			submit = new URL(requestUrl);
-			HttpURLConnection conn = (HttpURLConnection) submit
-					.openConnection();
+			HttpURLConnection conn = (HttpURLConnection) submit.openConnection();
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
 			conn.setUseCaches(false);
 
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Connection", "Keep-Alive");
-			conn.setRequestProperty("Content-Type",
-					"multipart/form-data;boundary=" + boundary);
+			conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 			// 获取输出流对象，准备上传文件
 			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 			dos.writeBytes(twoHyphens + boundary + end);
-			dos.writeBytes("Content-Disposition: form-data; name=\"" + file
-					+ "\";filename=\"" + filename + ";filelength=\"" + filePath
-					+ ";" + end);
+			dos.writeBytes("Content-Disposition: form-data; name=\"" + file + "\";filename=\"" + filename + ";filelength=\"" + filePath + ";" + end);
 			dos.writeBytes(end);
 			// 对文件进行传输
 			FileInputStream fis = new FileInputStream(file);
@@ -212,23 +205,21 @@ public class FileService {
 	 * @param mediaId
 	 * @return 媒体url地址
 	 */
-	public static String downloadFile(String mediaId, String access_token) {
-		return dwonloadFileURL.replace("ACCESS_TOKEN", access_token).replace(
-				"MEDIA_ID", mediaId);
+	public  String downloadFile(String mediaId, String access_token) {
+		return dwonloadFileURL.replace("ACCESS_TOKEN", access_token).replace("MEDIA_ID", mediaId);
 	}
 
 	public static void main(String[] args) {
+		
 		// 上传卡券logo到微信服务器，返回url
-		JSONObject jsonObject = new JSONObject();
-		try {
-			jsonObject = uploadLogo(
-					"C:\\Users\\Administrator\\Documents\\tm_web\\WebContent\\static\\css\\topper\\login.bmp",
-					ConstantsSubscribe.getAccess_token());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(jsonObject.toString());
+//		JSONObject jsonObject = new JSONObject();
+//		try {
+//			jsonObject = uploadLogo("C:\\Users\\Administrator\\Documents\\tm_web\\WebContent\\static\\css\\topper\\login.bmp", ConstantsSubscribe.getAccess_token());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println(jsonObject.toString());
 		// 订阅号卡券logo url
 		// ：http://mmbiz.qpic.cn/mmbiz/ZLzqcHwH9WrhEj8NfdYwKDZ0PJeLM1Yqe97P9BrmtCkIssqyyicVMFKb0fgQTSV7f1dCtjNLIpIibFIDSSsKzl6w/0
 	}

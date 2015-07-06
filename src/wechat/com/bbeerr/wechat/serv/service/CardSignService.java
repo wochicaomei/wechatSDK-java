@@ -1,6 +1,6 @@
 package com.bbeerr.wechat.serv.service;
 
-import com.bbeerr.wechat.util.WxCardSignUtil;
+import com.bbeerr.wechat.base.util.WxCardSignUtil;
 
 /**微信卡券签名
  * @author Administrator

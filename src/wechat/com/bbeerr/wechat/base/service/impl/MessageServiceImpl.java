@@ -1,8 +1,10 @@
-package com.bbeerr.wechat.subs.service;
+package com.bbeerr.wechat.base.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.stereotype.Service;
 
 import com.bbeerr.wechat.base.util.MessageUtil;
 import com.bbeerr.wechat.constants.ConstantsWeChat;
@@ -19,7 +21,8 @@ import com.bbeerr.wechat.entity.message.resp.VideoMessage;
  * @version 1.0
  * 
  */
-public class MessageService {
+@Service
+public class MessageServiceImpl {
 
 	public static Map<String, BaseMessage> bulidMessageMap = new HashMap<String, BaseMessage>();
 	

@@ -1,0 +1,13 @@
+{
+"button":[
+{"type":"view",
+"name":"我要抽奖",
+"url":"http://test.91tianmi.com/tm_web/event20150618"
+},
+{
+"name":"领取卡券",
+"type":"click",
+"key":"lingqu"
+}
+}]
+}

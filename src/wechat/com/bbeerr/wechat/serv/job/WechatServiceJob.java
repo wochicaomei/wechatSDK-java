@@ -8,10 +8,10 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
+import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.entity.AccessToken;
 import com.bbeerr.wechat.serv.constants.ConstantsService;
 import com.bbeerr.wechat.subs.job.WechatSubscribeJob;
-import com.bbeerr.wechat.util.WeixinUtil;
 
 public class WechatServiceJob {
 	public static Logger log = Logger.getLogger(WechatServiceJob.class);

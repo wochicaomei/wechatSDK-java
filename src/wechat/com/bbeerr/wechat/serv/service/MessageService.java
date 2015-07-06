@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.bbeerr.wechat.base.util.MessageUtil;
 import com.bbeerr.wechat.constants.ConstantsWeChat;
 import com.bbeerr.wechat.entity.message.resp.BaseMessage;
 import com.bbeerr.wechat.entity.message.resp.MediaMessage;
@@ -11,7 +12,6 @@ import com.bbeerr.wechat.entity.message.resp.MusicMessage;
 import com.bbeerr.wechat.entity.message.resp.NewsMessage;
 import com.bbeerr.wechat.entity.message.resp.TextMessage;
 import com.bbeerr.wechat.entity.message.resp.VideoMessage;
-import com.bbeerr.wechat.util.MessageUtil;
 
 /**
  * 消息处理

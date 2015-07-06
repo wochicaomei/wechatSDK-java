@@ -1,4 +1,4 @@
-package com.bbeerr.wechat.util;
+package com.bbeerr.wechat.base.util;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bbeerr.wechat.base.util.HttpUtil;
+import com.bbeerr.wechat.base.util.MessageUtil;
+import com.bbeerr.wechat.base.util.SignUtil;
+import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.constants.ConstantsUrl;
 import com.bbeerr.wechat.constants.ConstantsWeChat;
 import com.bbeerr.wechat.entity.message.resp.Article;
@@ -34,10 +38,6 @@ import com.bbeerr.wechat.subs.service.MessageService;
 import com.bbeerr.wechat.subs.service.OAuthService;
 import com.bbeerr.wechat.subs.service.SignService;
 import com.bbeerr.wechat.subs.service.UserService;
-import com.bbeerr.wechat.util.HttpUtil;
-import com.bbeerr.wechat.util.MessageUtil;
-import com.bbeerr.wechat.util.SignUtil;
-import com.bbeerr.wechat.util.WeixinUtil;
 
 /**
  * 添米微信订阅测试号Controller

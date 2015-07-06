@@ -1,4 +1,4 @@
-package com.bbeerr.wechat.subs.service;
+package com.bbeerr.wechat.base.service.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -6,19 +6,23 @@ import java.net.URLEncoder;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
+import com.bbeerr.wechat.base.service.IQRcodeService;
 import com.bbeerr.wechat.base.util.StringUtil;
 import com.bbeerr.wechat.base.util.WeixinUtil;
 
 /**
  * 二维码
+ * 
  * @author caspar.chen
  * @version 1.0
  * 
  */
-public class QRcodeService {
+@Service
+public class QRcodeServiceImpl implements IQRcodeService{
 
-	public static Logger log = Logger.getLogger(QRcodeService.class);
+	public static Logger log = Logger.getLogger(QRcodeServiceImpl.class);
 
 	/**
 	 * 获取ticket
@@ -34,7 +38,7 @@ public class QRcodeService {
 	 * 二维码类型，临时
 	 */
 	public static final String QRCODE_SCENE = "QR_SCENE";
-	
+
 	/**
 	 * 二维码类型，永久
 	 */
@@ -49,23 +53,18 @@ public class QRcodeService {
 	 *            场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000（目前参数只支持1--100000）
 	 * @return ticket
 	 */
-	public static String getTicket(String actionName, int sceneId ,String access_token) {
+	public  String getTicket(String actionName, int sceneId, String access_token) {
 
 		String url = QRCODE_ACTION.replace("TOKEN", access_token);
 
 		String ticket = "";
 
-		String qrdata = "{\"action_name\": \"" + actionName
-				+ "\", \"action_info\": {\"scene\": {\"scene_id\": " + sceneId
-				+ "}}}";
+		String qrdata = "{\"action_name\": \"" + actionName + "\", \"action_info\": {\"scene\": {\"scene_id\": " + sceneId + "}}}";
 
 		JSONObject jsonObject = WeixinUtil.httpsRequest(url, "POST", qrdata);
 		if (null != jsonObject) {
-			if (StringUtil.isNotEmpty(jsonObject.get("errcode"))
-					&& jsonObject.get("errcode") != "0") {
-				log.error("二维码ticket请求失败，errcode:"
-						+ jsonObject.getInt("errcode") + "，errmsg:"
-						+ jsonObject.getString("errmsg"));
+			if (StringUtil.isNotEmpty(jsonObject.get("errcode")) && jsonObject.get("errcode") != "0") {
+				log.error("二维码ticket请求失败，errcode:" + jsonObject.getInt("errcode") + "，errmsg:" + jsonObject.getString("errmsg"));
 			} else {
 				ticket = jsonObject.getString("ticket");
 			}
@@ -80,7 +79,7 @@ public class QRcodeService {
 	 * @param ticket
 	 * @return 二维码图片的url
 	 */
-	public static String getQrCodeImgURL(String ticket) {
+	public  String getQrCodeImgURL(String ticket) {
 		try {
 			ticket = URLEncoder.encode(ticket, "utf-8");
 		} catch (UnsupportedEncodingException e) {

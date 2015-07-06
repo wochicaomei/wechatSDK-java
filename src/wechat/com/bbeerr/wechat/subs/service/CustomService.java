@@ -7,6 +7,8 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
+import com.bbeerr.wechat.base.util.StringUtil;
+import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.constants.ConstantsWeChat;
 import com.bbeerr.wechat.entity.customer.CustomerBaseMessage;
 import com.bbeerr.wechat.entity.customer.MediaMessage;
@@ -14,8 +16,6 @@ import com.bbeerr.wechat.entity.customer.MusicMessage;
 import com.bbeerr.wechat.entity.customer.NewsMessage;
 import com.bbeerr.wechat.entity.customer.TextMessage;
 import com.bbeerr.wechat.entity.customer.VideoMessage;
-import com.bbeerr.wechat.util.StringUtil;
-import com.bbeerr.wechat.util.WeixinUtil;
 
 /**
  * 发送客服消息

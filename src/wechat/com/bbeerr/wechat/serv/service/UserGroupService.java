@@ -8,9 +8,9 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
+import com.bbeerr.wechat.base.util.StringUtil;
+import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.entity.user.UserGroup;
-import com.bbeerr.wechat.util.StringUtil;
-import com.bbeerr.wechat.util.WeixinUtil;
 
 /**
  * 分组管理

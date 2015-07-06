@@ -1,4 +1,4 @@
-package com.bbeerr.wechat.serv.service;
+package com.bbeerr.wechat.base.service.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,9 @@ import java.util.Map;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
+import com.bbeerr.wechat.base.service.ICustomService;
 import com.bbeerr.wechat.base.util.StringUtil;
 import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.constants.ConstantsWeChat;
@@ -23,9 +25,10 @@ import com.bbeerr.wechat.entity.customer.VideoMessage;
  * @version 1.0
  * 
  */
-public class CustomService {
+@Service
+public class CustomServiceImpl implements ICustomService{
 
-	public static Logger log = Logger.getLogger(CustomService.class);
+	public static Logger log = Logger.getLogger(CustomServiceImpl.class);
 
 	private static String CUSTOME_URL = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN";
 
@@ -45,7 +48,7 @@ public class CustomService {
 	 * @param obj	消息对象
 	 * @return 是否发送成功
 	 */
-	public static boolean sendCustomerMessage(Object obj ,String access_token) {
+	public  boolean sendCustomerMessage(Object obj ,String access_token) {
 		boolean bo = false;
 		String url = CUSTOME_URL.replace("ACCESS_TOKEN", access_token);
 		JSONObject json = JSONObject.fromObject(obj);
@@ -70,22 +73,11 @@ public class CustomService {
 	 *            消息类型
 	 * @return BaseMessage 基本消息对象
 	 */
-	public static Object bulidCustomerBaseMessage(String toUser,
-			String msgType) {
+	public  Object bulidCustomerBaseMessage(String toUser, String msgType) {
 		CustomerBaseMessage message = bulidMessageMap.get(msgType);
 		message.setTouser(toUser);
 		message.setMsgtype(msgType);
 		return message;
-	}
-	public static void main(String []args){
-		String demo = "sfsfsfs-98998989";
-		if(demo.contains("-")){
-		String state = demo.split("-")[0];
-		String code = demo.split("-")[1];
-		System.out.println(state);
-		System.out.println(code);
-		}
-		
 	}
 
 }

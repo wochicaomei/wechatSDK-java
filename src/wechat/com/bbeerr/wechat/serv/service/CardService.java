@@ -6,8 +6,8 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
+import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.serv.constants.ConstantsService;
-import com.bbeerr.wechat.util.WeixinUtil;
 
 public class CardService {
 	public static Logger log = Logger.getLogger(CardService.class);

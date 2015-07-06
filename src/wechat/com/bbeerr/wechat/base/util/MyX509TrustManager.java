@@ -1,4 +1,4 @@
-package com.bbeerr.wechat.util;
+package com.bbeerr.wechat.base.util;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;

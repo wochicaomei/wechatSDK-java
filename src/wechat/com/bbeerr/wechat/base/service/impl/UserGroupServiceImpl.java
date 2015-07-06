@@ -1,4 +1,4 @@
-package com.bbeerr.wechat.subs.service;
+package com.bbeerr.wechat.base.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,20 +7,24 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
+import com.bbeerr.wechat.base.service.IUserGroupService;
 import com.bbeerr.wechat.base.util.StringUtil;
 import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.entity.user.UserGroup;
 
 /**
  * 分组管理
+ * 
  * @author caspar.chen
  * @version 1.0
  * 
  */
-public class UserGroupService {
+@Service
+public class UserGroupServiceImpl implements IUserGroupService{
 
-	public static Logger log = Logger.getLogger(UserGroupService.class);
+	public static Logger log = Logger.getLogger(UserGroupServiceImpl.class);
 
 	/**
 	 * 创建分组URL
@@ -56,22 +60,19 @@ public class UserGroupService {
 	 *            分组名称
 	 * @return 分组ID
 	 */
-	public static String createGroup(String groupName ,String access_token) {
+	public String createGroup(String groupName, String access_token) {
 
 		String id = null;
 
-		String url = CREATE_GROUP_URL.replace("ACCESS_TOKEN",
-				access_token);
+		String url = CREATE_GROUP_URL.replace("ACCESS_TOKEN", access_token);
 
 		String data = "{\"group\":{\"name\":\"" + groupName + "\"}}";
 
 		JSONObject jsonObject = WeixinUtil.httpsRequest(url, "POST", data);
 
 		if (null != jsonObject) {
-			if (StringUtil.isNotEmpty(jsonObject.get("errcode"))
-					&& jsonObject.get("errcode") != "0") {
-				log.error("创建分组失败，errcode:" + jsonObject.getInt("errcode")
-						+ "，errmsg:" + jsonObject.getString("errmsg"));
+			if (StringUtil.isNotEmpty(jsonObject.get("errcode")) && jsonObject.get("errcode") != "0") {
+				log.error("创建分组失败，errcode:" + jsonObject.getInt("errcode") + "，errmsg:" + jsonObject.getString("errmsg"));
 			} else {
 				id = jsonObject.getJSONObject("group").getString("id");
 			}
@@ -84,19 +85,16 @@ public class UserGroupService {
 	 * 
 	 * @return 分组列表
 	 */
-	public static List<UserGroup> getGroup(String access_token) {
+	public List<UserGroup> getGroup(String access_token) {
 
 		List<UserGroup> list = new ArrayList<UserGroup>();
 
-		String url = GET_GROUP_URL.replace("ACCESS_TOKEN",
-				access_token);
+		String url = GET_GROUP_URL.replace("ACCESS_TOKEN", access_token);
 
 		JSONObject jsonObject = WeixinUtil.httpsRequest(url, "POST", null);
 		if (null != jsonObject) {
-			if (StringUtil.isNotEmpty(jsonObject.get("errcode"))
-					&& jsonObject.get("errcode") != "0") {
-				log.error("获取分组失败，errcode:" + jsonObject.getInt("errcode")
-						+ "，errmsg:" + jsonObject.getString("errmsg"));
+			if (StringUtil.isNotEmpty(jsonObject.get("errcode")) && jsonObject.get("errcode") != "0") {
+				log.error("获取分组失败，errcode:" + jsonObject.getInt("errcode") + "，errmsg:" + jsonObject.getString("errmsg"));
 			} else {
 				JSONArray arr = jsonObject.getJSONArray("groups");
 				for (int i = 0; i < arr.size(); i++) {
@@ -118,21 +116,18 @@ public class UserGroupService {
 	 *            用户openid
 	 * @return 分组id
 	 */
-	public static String getGroupByOpenid(String openid ,String access_token) {
+	public String getGroupByOpenid(String openid, String access_token) {
 
 		String groupid = null;
 
-		String url = GET_USER_GOUP.replace("ACCESS_TOKEN",
-				access_token);
+		String url = GET_USER_GOUP.replace("ACCESS_TOKEN", access_token);
 
 		String data = "{\"openid\":\"" + openid + "\"}";
 		JSONObject jsonObject = WeixinUtil.httpsRequest(url, "POST", data);
 
 		if (null != jsonObject) {
-			if (StringUtil.isNotEmpty(jsonObject.get("errcode"))
-					&& jsonObject.get("errcode") != "0") {
-				log.error("查询用户所在分组失败，errcode:" + jsonObject.getInt("errcode")
-						+ "，errmsg:" + jsonObject.getString("errmsg"));
+			if (StringUtil.isNotEmpty(jsonObject.get("errcode")) && jsonObject.get("errcode") != "0") {
+				log.error("查询用户所在分组失败，errcode:" + jsonObject.getInt("errcode") + "，errmsg:" + jsonObject.getString("errmsg"));
 			} else {
 				groupid = jsonObject.getString("groupid");
 			}
@@ -149,21 +144,18 @@ public class UserGroupService {
 	 *            分组name
 	 * @return 是否成功
 	 */
-	public static boolean updateGroupName(int id, String name,String access_token) {
+	public boolean updateGroupName(int id, String name, String access_token) {
 
 		boolean bo = false;
 
-		String url = UPDATE_GROUP_NAME.replace("ACCESS_TOKEN",
-				access_token);
+		String url = UPDATE_GROUP_NAME.replace("ACCESS_TOKEN", access_token);
 
-		String data = "{\"group\":{\"id\":" + id + ",\"name\":\"" + name
-				+ "\"}}";
+		String data = "{\"group\":{\"id\":" + id + ",\"name\":\"" + name + "\"}}";
 
 		JSONObject jsonObject = WeixinUtil.httpsRequest(url, "POST", data);
 
 		if (null != jsonObject) {
-			if (StringUtil.isNotEmpty(jsonObject.getString("errcode"))
-					&& jsonObject.getString("errcode").equals("0")) {
+			if (StringUtil.isNotEmpty(jsonObject.getString("errcode")) && jsonObject.getString("errcode").equals("0")) {
 				bo = true;
 			}
 		}
@@ -172,25 +164,25 @@ public class UserGroupService {
 
 	/**
 	 * 移动用户分组
-	 * @param openid	用户openid
-	 * @param groupId	分组id
-	 * @return	是否成功
+	 * 
+	 * @param openid
+	 *            用户openid
+	 * @param groupId
+	 *            分组id
+	 * @return 是否成功
 	 */
-	public static boolean moveUserToGroup(String openid, int groupId ,String access_token) {
+	public boolean moveUserToGroup(String openid, int groupId, String access_token) {
 
 		boolean bo = false;
 
-		String url = MOVE_USER_TO_GROUP.replace("ACCESS_TOKEN",
-				access_token);
+		String url = MOVE_USER_TO_GROUP.replace("ACCESS_TOKEN", access_token);
 
-		String data = "{\"openid\":\"" + openid + "\",\"to_groupid\":"
-				+ groupId + "}";
+		String data = "{\"openid\":\"" + openid + "\",\"to_groupid\":" + groupId + "}";
 
 		JSONObject jsonObject = WeixinUtil.httpsRequest(url, "POST", data);
 
 		if (null != jsonObject) {
-			if (StringUtil.isNotEmpty(jsonObject.getString("errcode"))
-					&& jsonObject.getString("errcode").equals("0")) {
+			if (StringUtil.isNotEmpty(jsonObject.getString("errcode")) && jsonObject.getString("errcode").equals("0")) {
 				bo = true;
 			}
 		}

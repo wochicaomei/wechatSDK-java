@@ -1,6 +1,6 @@
 package com.bbeerr.wechat.subs.constants;
 
-import com.bbeerr.wechat.util.ConfigUtil;
+import com.bbeerr.wechat.base.util.ConfigUtil;
 
 /**
  * 添米微信测试- 订阅号 常量

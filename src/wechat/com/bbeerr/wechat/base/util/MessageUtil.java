@@ -1,4 +1,4 @@
-package com.bbeerr.wechat.util;
+package com.bbeerr.wechat.base.util;
 
 import java.io.InputStream;
 import java.io.Writer;

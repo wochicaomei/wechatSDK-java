@@ -1,4 +1,4 @@
-package com.bbeerr.wechat.subs.service;
+package com.bbeerr.wechat.base.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,7 +7,9 @@ import java.util.List;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
+import com.bbeerr.wechat.base.service.IUserService;
 import com.bbeerr.wechat.base.util.DateFormart;
 import com.bbeerr.wechat.base.util.StringUtil;
 import com.bbeerr.wechat.base.util.WeixinUtil;
@@ -20,9 +22,10 @@ import com.bbeerr.wechat.subs.constants.ConstantsSubscribe;
  * @version 1.0
  * 
  */
-public class UserService {
+@Service
+public class UserServiceImpl implements IUserService{
 
-	public static Logger log = Logger.getLogger(UserService.class);
+	public static Logger log = Logger.getLogger(UserServiceImpl.class);
 
 	/**
 	 * 获取用户详细信息
@@ -34,7 +37,7 @@ public class UserService {
 	 */
 	public static String GET_USER_OPENID_LIST = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&next_openid=NEXT_OPENID";
 
-	public static UserWeiXin getUnsubCribeUserInfo(String openid,String access_token){
+	public UserWeiXin getUnsubCribeUserInfo(String openid,String access_token){
 		UserWeiXin user = null;
 		if (access_token != null) {
 			String url = GET_USER_INFO.replace("ACCESS_TOKEN", access_token).replace(
@@ -63,7 +66,7 @@ public class UserService {
 	 * @param openid
 	 * @return UserWeiXin 用户详细信息
 	 */
-	public static UserWeiXin getUserInfo(String openid ,String access_token) {
+	public UserWeiXin getUserInfo(String openid ,String access_token) {
 		UserWeiXin user = null;
 		if (access_token != null) {
 			String url = GET_USER_INFO.replace("ACCESS_TOKEN", access_token).replace(
@@ -104,7 +107,7 @@ public class UserService {
 	 * 
 	 * @return List<String> 关注者openID列表
 	 */
-	public static List<String> getUserOpenIdList(String access_token) {
+	public List<String> getUserOpenIdList(String access_token) {
 		List<String> list = null;
 		if (access_token != null) {
 			String url = GET_USER_OPENID_LIST.replace("ACCESS_TOKEN", access_token)
@@ -140,7 +143,7 @@ public class UserService {
 	 * 
 	 * @return List<UserWeiXin> 关注者列表信息
 	 */
-	public static List<UserWeiXin> getUserList(String access_token) {
+	public List<UserWeiXin> getUserList(String access_token) {
 		List<UserWeiXin> list = new ArrayList<UserWeiXin>();
 
 		// 获取关注用户openid列表
@@ -161,8 +164,8 @@ public class UserService {
 	
 	
 	public static void main(String[] args){
-		for(UserWeiXin user:getUserList(ConstantsSubscribe.getAccess_token())){
+		/*for(UserWeiXin user:getUserList(ConstantsSubscribe.getAccess_token())){
 			System.out.println("openid:"+user.getOpenid()+"  unionid:"+user.getUnionid()+"  nickname:"+user.getNickname());
-	}
+	}*/
 	}
 }
