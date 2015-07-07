@@ -14,7 +14,7 @@ public interface ICardService {
 	
 	public Integer destroyCode(HttpServletRequest request,String code,String card_id, String access_token);
 	
-	public String decrypt_code(HttpServletRequest request , String encrypt_code , String access_token);
+	public String decryptCode(HttpServletRequest request , String encrypt_code , String access_token);
 	
 	public Integer testWhiteList(String access_token ,  String data);
 	

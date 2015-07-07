@@ -14,12 +14,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bbeerr.wechat.base.service.ICardService;
+import com.bbeerr.wechat.base.service.ICardSignService;
+import com.bbeerr.wechat.base.service.IMenuService;
+import com.bbeerr.wechat.base.service.IMessageService;
+import com.bbeerr.wechat.base.service.IOAuthService;
+import com.bbeerr.wechat.base.service.ISignService;
+import com.bbeerr.wechat.base.service.IUserService;
+import com.bbeerr.wechat.base.service.impl.CardServiceImpl;
 import com.bbeerr.wechat.base.util.HttpUtil;
 import com.bbeerr.wechat.base.util.MessageUtil;
 import com.bbeerr.wechat.base.util.SignUtil;
@@ -31,25 +40,31 @@ import com.bbeerr.wechat.entity.message.resp.NewsMessage;
 import com.bbeerr.wechat.entity.message.resp.TextMessage;
 import com.bbeerr.wechat.entity.user.UserWeiXin;
 import com.bbeerr.wechat.subs.constants.ConstantsSubscribe;
-import com.bbeerr.wechat.subs.service.CardService;
-import com.bbeerr.wechat.subs.service.CardSignService;
-import com.bbeerr.wechat.subs.service.MenuService;
-import com.bbeerr.wechat.subs.service.MessageService;
-import com.bbeerr.wechat.subs.service.OAuthService;
-import com.bbeerr.wechat.subs.service.SignService;
-import com.bbeerr.wechat.subs.service.UserService;
 
 /**
  * 添米微信订阅测试号Controller
  */
 @Controller
 public class WechatSubcribeController {
-
+	
+	@Autowired
+	IMenuService menuService;
+	@Autowired
+	IUserService userService;
+	@Autowired
+	ICardService cardService;
+	@Autowired
+	ICardSignService cardSignService;
+	@Autowired
+	IOAuthService oauthService;
+	@Autowired
+	ISignService signService;
+	@Autowired
+	IMessageService messageService;
+	
 	/**
 	 * 创建菜单
-	 * 
-	 * @param menu
-	 *            菜单实例
+	 *       菜单实例
 	 * @param accessToken
 	 *            有效的access_token
 	 * @return 0表示成功，其他值表示失败
@@ -60,7 +75,7 @@ public class WechatSubcribeController {
 		String menu_url = WechatSubcribeController.class.getClassLoader().getResource("wechat_draw_menu.json").toString().replace("file:", "");
 		String jsonMenu = WeixinUtil.ReadFile(menu_url);
 		System.out.println("menu:" + jsonMenu);
-		int result = MenuService.createMenu(jsonMenu, ConstantsSubscribe.getAccess_token());
+		int result = menuService.createMenu(jsonMenu, ConstantsSubscribe.getAccess_token());
 		System.out.println(result == 0 ? "菜单创建成功" : "菜单创建失败");
 		mv.addObject("menu_result", result == 0 ? "菜单创建成功" : "菜单创建失败");
 		mv.setViewName("/wechat/wechat_result");
@@ -74,7 +89,7 @@ public class WechatSubcribeController {
 		List<String> userList = new ArrayList<String>();
 		String accessToken = ConstantsSubscribe.getAccess_token();
 		if(accessToken !=null && !accessToken.equals("")){
-		for (UserWeiXin user : UserService.getUserList(accessToken)) {
+		for (UserWeiXin user : userService.getUserList(accessToken)) {
 			userList.add("openid:" + user.getOpenid() + "  unionid:" + user.getUnionid() + "  nickname:" + user.getNickname());
 		}
 		}
@@ -96,11 +111,11 @@ public class WechatSubcribeController {
 		Map<Integer, String> cardList = new HashMap<Integer, String>();
 		List<String> cardIdList = new ArrayList<String>();
 
-		String card_10_url = CardService.class.getClassLoader().getResource("wechat_card_cash_10.json").toString().replace("file:", "");
-		String card_20_url = CardService.class.getClassLoader().getResource("wechat_card_cash_20.json").toString().replace("file:", "");
-		String card_50_url = CardService.class.getClassLoader().getResource("wechat_card_cash_50.json").toString().replace("file:", "");
-		String card_charge_url = CardService.class.getClassLoader().getResource("wechat_card_charge.json").toString().replace("file:", "");
-		String card_watch_url = CardService.class.getClassLoader().getResource("wechat_card_watch.json").toString().replace("file:", "");
+		String card_10_url = CardServiceImpl.class.getClassLoader().getResource("wechat_card_cash_10.json").toString().replace("file:", "");
+		String card_20_url = CardServiceImpl.class.getClassLoader().getResource("wechat_card_cash_20.json").toString().replace("file:", "");
+		String card_50_url = CardServiceImpl.class.getClassLoader().getResource("wechat_card_cash_50.json").toString().replace("file:", "");
+		String card_charge_url = CardServiceImpl.class.getClassLoader().getResource("wechat_card_charge.json").toString().replace("file:", "");
+		String card_watch_url = CardServiceImpl.class.getClassLoader().getResource("wechat_card_watch.json").toString().replace("file:", "");
 
 		urls.add(card_10_url);
 		urls.add(card_20_url);
@@ -113,7 +128,7 @@ public class WechatSubcribeController {
 			System.out.println(cardList.get(i));
 		}
 		for (int i = 0; i < cardList.size(); i++) {
-			cardIdList.add(CardService.createCard(cardList.get(i), ConstantsSubscribe.getAccess_token()).toString());
+			cardIdList.add(cardService.createCard(cardList.get(i), ConstantsSubscribe.getAccess_token()).toString());
 		}
 
 		mv.addObject("cardIdList", cardIdList);
@@ -132,9 +147,9 @@ public class WechatSubcribeController {
 	public ModelAndView redirect(@RequestParam String encrypt_code, HttpServletResponse response, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		String code = request.getParameter("code");
-		String openid = OAuthService.getOAuthAccessToken(ConstantsSubscribe.APPID, ConstantsSubscribe.APPSECRET, code).getOpenid();
+		String openid = oauthService.getOAuthAccessToken(ConstantsSubscribe.APPID, ConstantsSubscribe.APPSECRET, code).getOpenid();
 		System.out.println("openid" + openid);
-		UserWeiXin userInfo = UserService.getUserInfo(openid, ConstantsSubscribe.getAccess_token());
+		UserWeiXin userInfo = userService.getUserInfo(openid, ConstantsSubscribe.getAccess_token());
 		System.out.println("userInfo" + userInfo.toString());
 		String state = request.getParameter("state");
 		// mv.addObject("openid", openid);
@@ -160,7 +175,7 @@ public class WechatSubcribeController {
 	@RequestMapping(value = "/code_redirect", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView code_redirect(@RequestParam String card_id, @RequestParam String encrypt_code, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		String code = CardService.decrypt_code(request, encrypt_code, ConstantsSubscribe.getAccess_token());
+		String code = cardService.decryptCode(request, encrypt_code, ConstantsSubscribe.getAccess_token());
 		mv.setViewName("redirect:"
 				+ "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd3634a6e86554592&redirect_uri=http://test.91tianmi.com/tm_web/menu_redirect&response_type=code&scope=snsapi_base&state=/wx/exchangecode-"
 				+ code + "#wechat_redirect");
@@ -200,7 +215,7 @@ public class WechatSubcribeController {
 		String timeStamp = Long.toString(System.currentTimeMillis() / 1000);
 		// card_id = "pBaiotxpmGTLGN37qNH029GvxkqY";
 		// openid ="oBaiot6DDKEhDCcl_8s0CivSBOJs";
-		String signature = CardSignService.WxCardSign(ConstantsSubscribe.getApi_ticket(), timeStamp, openid, code, card_id);
+		String signature = cardSignService.WxCardSign(ConstantsSubscribe.getApi_ticket(), timeStamp, openid, code, card_id);
 		cardSign.put("code", code);
 		cardSign.put("openid", openid);
 		cardSign.put("timestamp", timeStamp);
@@ -218,8 +233,8 @@ public class WechatSubcribeController {
 	 *            resutl 为0 表示 核销成功，result为1表示核销失败
 	 */
 	@RequestMapping(value = "/subcribe/destroyCard", method = { RequestMethod.POST, RequestMethod.GET })
-	public static void destroyCard(@RequestParam("code") String code, @RequestParam("card_id") String card_id, HttpServletRequest request) {
-		int result = CardService.destroyCode(request, code, card_id, ConstantsSubscribe.getAccess_token());
+	public  void destroyCard(@RequestParam("code") String code, @RequestParam("card_id") String card_id, HttpServletRequest request) {
+		int result = cardService.destroyCode(request, code, card_id, ConstantsSubscribe.getAccess_token());
 		System.out.println(result == 0 ? "核销卡券成功" : "核销卡券失败");
 	}
 
@@ -247,7 +262,7 @@ public class WechatSubcribeController {
 			try {
 				out = response.getWriter();
 				// 通过检验signature对请求进行校验，若校验成功则原样返回echostr，否则接入失败
-				if (SignService.checkSignature(ConstantsSubscribe.TOKEN, request)) {
+				if (signService.checkSignature(ConstantsSubscribe.TOKEN, request)) {
 					out.print(echostr);
 				}
 			} catch (IOException e) {
@@ -288,7 +303,7 @@ public class WechatSubcribeController {
 	 * @param request
 	 * @return String
 	 */
-	public static String processWebchatRequest(HttpServletRequest request) {
+	public  String processWebchatRequest(HttpServletRequest request) {
 		String respMessage = null;
 		try {
 			// xml请求解析
@@ -298,8 +313,8 @@ public class WechatSubcribeController {
 			// 用户openid
 			String fromUserName = requestMap.get("FromUserName");
 
-			TextMessage textMessage = (TextMessage) MessageService.bulidBaseMessage(requestMap, ConstantsWeChat.RESP_MESSAGE_TYPE_TEXT);
-			NewsMessage newsMessage = (NewsMessage) MessageService.bulidBaseMessage(requestMap, ConstantsWeChat.RESP_MESSAGE_TYPE_NEWS);
+			TextMessage textMessage = (TextMessage) messageService.bulidBaseMessage(requestMap, ConstantsWeChat.RESP_MESSAGE_TYPE_TEXT);
+			NewsMessage newsMessage = (NewsMessage) messageService.bulidBaseMessage(requestMap, ConstantsWeChat.RESP_MESSAGE_TYPE_NEWS);
 
 			String respContent = "";
 			// 文本消息
@@ -316,7 +331,7 @@ public class WechatSubcribeController {
 				if (eventType.equals(ConstantsWeChat.EVENT_TYPE_SUBSCRIBE)) {
 
 					// 关注,需要将关注者的信息录入到数据库
-					UserWeiXin user = UserService.getUserInfo(fromUserName, ConstantsSubscribe.getAccess_token());
+					UserWeiXin user = userService.getUserInfo(fromUserName, ConstantsSubscribe.getAccess_token());
 					Map<String, String> params = sendUserInfo(user.getUnionid(), user.getOpenid(), user.getNickname(), ConstantsUrl.operation_subcribe, ConstantsUrl.wxh_tmtt);
 					HttpUtil.http(ConstantsUrl.test_user_url, "POST", params);
 					// respContent = "欢迎关注添米微信订阅测试号!";
@@ -331,11 +346,11 @@ public class WechatSubcribeController {
 					// 设置图文消息包含的图文集合
 					newsMessage.setArticles(articleList);
 					// 将图文消息对象转换成xml字符串
-					respMessage = MessageService.bulidSendMessage(newsMessage, ConstantsWeChat.RESP_MESSAGE_TYPE_NEWS);
+					respMessage = messageService.bulidSendMessage(newsMessage, ConstantsWeChat.RESP_MESSAGE_TYPE_NEWS);
 				} else if (eventType.equals(ConstantsWeChat.EVENT_TYPE_UNSUBSCRIBE)) {
 
 					// 需要将取消关注者的信息从数据库删除
-					UserWeiXin user = UserService.getUnsubCribeUserInfo(fromUserName, ConstantsSubscribe.getAccess_token());
+					UserWeiXin user = userService.getUnsubCribeUserInfo(fromUserName, ConstantsSubscribe.getAccess_token());
 					Map<String, String> params = sendUserInfo(user.getUnionid(), user.getOpenid(), user.getNickname(), ConstantsUrl.operation_unsubcribe, ConstantsUrl.wxh_tmtt);
 					HttpUtil.http(ConstantsUrl.test_user_url, "POST", params);
 
@@ -348,7 +363,7 @@ public class WechatSubcribeController {
 					} else if (eventKey.equals("lingqu")) {
 					}
 					textMessage.setContent(respContent);
-					respMessage = MessageService.bulidSendMessage(textMessage, ConstantsWeChat.RESP_MESSAGE_TYPE_TEXT);
+					respMessage = messageService.bulidSendMessage(textMessage, ConstantsWeChat.RESP_MESSAGE_TYPE_TEXT);
 				}
 
 				// 用户领取卡券事件
@@ -357,7 +372,7 @@ public class WechatSubcribeController {
 					String cardid = requestMap.get("CardId");
 					// 每个用户卡券的code
 					String code = requestMap.get("UserCardCode");
-					UserWeiXin user = UserService.getUserInfo(fromUserName, ConstantsSubscribe.getAccess_token());
+					UserWeiXin user = userService.getUserInfo(fromUserName, ConstantsSubscribe.getAccess_token());
 					Map<String, String> params = sendCardInfo(ConstantsUrl.wxh_tmtt, user.getOpenid(), ConstantsUrl.operation_subcribe, code, cardid);
 					HttpUtil.http(ConstantsUrl.test_card_url, "POST", params);
 				}
@@ -384,7 +399,7 @@ public class WechatSubcribeController {
 	 *            微信号 tmtt:添米头条 tmcf：添米财富
 	 * @return
 	 */
-	public static Map<String, String> sendUserInfo(String unionid, String openid, String nickname, String operation, String wxh) {
+	public  Map<String, String> sendUserInfo(String unionid, String openid, String nickname, String operation, String wxh) {
 		Map<String, String> map = new HashMap();
 		map.put("wxh", wxh);
 		map.put("operation", operation);
@@ -404,7 +419,7 @@ public class WechatSubcribeController {
 	 * @param codeid
 	 * @return
 	 */
-	public static Map<String, String> sendCardInfo(String wxh, String openid, String operation, String code, String cardid) {
+	public  Map<String, String> sendCardInfo(String wxh, String openid, String operation, String code, String cardid) {
 		Map<String, String> map = new HashMap();
 		map.put("wxh", wxh);
 		map.put("operation", operation);

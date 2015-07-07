@@ -11,11 +11,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bbeerr.wechat.base.service.ICardService;
+import com.bbeerr.wechat.base.service.ICardSignService;
+import com.bbeerr.wechat.base.service.IMenuService;
+import com.bbeerr.wechat.base.service.IMessageService;
+import com.bbeerr.wechat.base.service.IOAuthService;
+import com.bbeerr.wechat.base.service.ISignService;
+import com.bbeerr.wechat.base.service.IUserService;
 import com.bbeerr.wechat.base.util.MessageUtil;
 import com.bbeerr.wechat.base.util.WeixinUtil;
 import com.bbeerr.wechat.constants.ConstantsUrl;
@@ -25,13 +33,6 @@ import com.bbeerr.wechat.entity.message.resp.NewsMessage;
 import com.bbeerr.wechat.entity.message.resp.TextMessage;
 import com.bbeerr.wechat.entity.user.UserWeiXin;
 import com.bbeerr.wechat.serv.constants.ConstantsService;
-import com.bbeerr.wechat.serv.service.MenuService;
-import com.bbeerr.wechat.serv.service.MessageService;
-import com.bbeerr.wechat.serv.service.OAuthService;
-import com.bbeerr.wechat.serv.service.SignService;
-import com.bbeerr.wechat.serv.service.UserService;
-import com.bbeerr.wechat.subs.constants.ConstantsSubscribe;
-import com.bbeerr.wechat.subs.controller.WechatSubcribeController;
 
 /**
  * 添米微信服务测试号Controller
@@ -39,6 +40,20 @@ import com.bbeerr.wechat.subs.controller.WechatSubcribeController;
 @Controller
 public class WechatServiceController {
 
+	@Autowired
+	IMenuService menuService;
+	@Autowired
+	IUserService userService;
+	@Autowired
+	ICardService cardService;
+	@Autowired
+	ICardSignService cardSignService;
+	@Autowired
+	IOAuthService oauthService;
+	@Autowired
+	ISignService signService;
+	@Autowired
+	IMessageService messageService;
 	/**
 	 * 微信菜单创建
 	 * 
@@ -51,7 +66,7 @@ public class WechatServiceController {
 		String menu_url = WechatServiceController.class.getClassLoader().getResource("wechat_menu.json").toString().replace("file:", "");
 		String jsonMenu = WeixinUtil.ReadFile(menu_url);
 		System.out.println("menu:" + jsonMenu);
-		int result = MenuService.createMenu(jsonMenu, ConstantsService.getAccess_token());
+		int result = menuService.createMenu(jsonMenu, ConstantsService.getAccess_token());
 		System.out.println(result == 0 ? "菜单创建成功" : "菜单创建失败");
 		mv.addObject("menu_result", result == 0 ? "菜单创建成功" : "菜单创建失败");
 		mv.setViewName("/wechat/wechat_result");
@@ -70,8 +85,8 @@ public class WechatServiceController {
 		ModelAndView mv = new ModelAndView();
 		String cardcode = null, state1 = null;
 		String code = request.getParameter("code");
-		String openid = OAuthService.getOAuthAccessToken(ConstantsService.APPID, ConstantsService.APPSECRET, code).getOpenid();
-		UserWeiXin userInfo = UserService.getUserInfo(openid, ConstantsService.getAccess_token());
+		String openid = oauthService.getOAuthAccessToken(ConstantsService.APPID, ConstantsService.APPSECRET, code).getOpenid();
+		UserWeiXin userInfo = userService.getUserInfo(openid, ConstantsService.getAccess_token());
 		String state = request.getParameter("state");
 		mv.addObject("openid", openid);
 		if (state.contains("-")) {
@@ -105,7 +120,7 @@ public class WechatServiceController {
 			try {
 				out = response.getWriter();
 				// 通过检验signature对请求进行校验，若校验成功则原样返回echostr，否则接入失败
-				if (SignService.checkSignature(ConstantsService.TOKEN, request)) {
+				if (signService.checkSignature(ConstantsService.TOKEN, request)) {
 					out.print(echostr);
 				}
 			} catch (IOException e) {
@@ -146,7 +161,7 @@ public class WechatServiceController {
 	 * @param request
 	 * @return String
 	 */
-	public static String processWebchatRequest(HttpServletRequest request) {
+	public  String processWebchatRequest(HttpServletRequest request) {
 	    String respMessage = null;
 	    try {
 	        // xml请求解析
@@ -156,10 +171,10 @@ public class WechatServiceController {
 	        //用户openid
 	        String formUserName = requestMap.get("FromUserName");
 
-	        TextMessage textMessage = (TextMessage) MessageService
+	        TextMessage textMessage = (TextMessage) messageService
 	                .bulidBaseMessage(requestMap,
 	                        ConstantsWeChat.RESP_MESSAGE_TYPE_TEXT);
-	        NewsMessage newsMessage = (NewsMessage) MessageService
+	        NewsMessage newsMessage = (NewsMessage) messageService
 	                .bulidBaseMessage(requestMap,
 	                        ConstantsWeChat.RESP_MESSAGE_TYPE_NEWS);
 
@@ -194,17 +209,13 @@ public class WechatServiceController {
 	                }
 	            }
 	            textMessage.setContent(respContent);
-	            respMessage = MessageService.bulidSendMessage(textMessage,
+	            respMessage = messageService.bulidSendMessage(textMessage,
 	                    ConstantsWeChat.RESP_MESSAGE_TYPE_TEXT);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    return respMessage;
-	}
-
-	public String menuSetting(String filePath) {
-		return WeixinUtil.ReadFile(filePath);
 	}
 
 }

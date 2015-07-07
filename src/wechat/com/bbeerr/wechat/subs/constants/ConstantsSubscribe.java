@@ -14,17 +14,17 @@ public class ConstantsSubscribe {
 	/**
 	 * 与接口配置信息中的Token要一致
 	 */
-	public static String TOKEN = ConfigUtil.get("subcribe.token");
+	public static String TOKEN = ConfigUtil.get("subscribe.token");
 
 	/**
 	 * 第三方用户唯一凭证
 	 */
-	public static String APPID = ConfigUtil.get("subcribe.appId");
+	public static String APPID = ConfigUtil.get("subscribe.appId");
 
 	/**
 	 * 第三方用户唯一凭证密钥
 	 */
-	public static String APPSECRET = ConfigUtil.get("subcribe.appSecret");
+	public static String APPSECRET = ConfigUtil.get("subscribe.appSecret");
 
 	private static String ACCESS_TOKEN = "";
 	private static String JSAPI_TICKET = "";

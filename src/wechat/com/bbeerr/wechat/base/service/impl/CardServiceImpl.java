@@ -154,7 +154,7 @@ public class CardServiceImpl implements ICardService {
 	 * @param access_token
 	 * @return code
 	 */
-	public  String decrypt_code(HttpServletRequest request , String encrypt_code , String access_token){
+	public  String decryptCode(HttpServletRequest request , String encrypt_code , String access_token){
 		String code =  null;
 		String requestUrl = decrypt_code_url.replace("TOKEN", access_token);
 		JSONObject post_data = new JSONObject();
