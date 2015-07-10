@@ -14,6 +14,7 @@ import com.bbeerr.wechat.entity.message.resp.MediaMessage;
 import com.bbeerr.wechat.entity.message.resp.MusicMessage;
 import com.bbeerr.wechat.entity.message.resp.NewsMessage;
 import com.bbeerr.wechat.entity.message.resp.TextMessage;
+import com.bbeerr.wechat.entity.message.resp.TransferMessage;
 import com.bbeerr.wechat.entity.message.resp.VideoMessage;
 
 /**
@@ -35,6 +36,7 @@ public class MessageServiceImpl implements IMessageService{
 		bulidMessageMap.put(ConstantsWeChat.RESP_MESSAGE_TYPE_VOICE, new MediaMessage());
 		bulidMessageMap.put(ConstantsWeChat.RESP_MESSAGE_TYPE_VIDEO, new VideoMessage());
 		bulidMessageMap.put(ConstantsWeChat.RESP_MESSAGE_TYPE_MUSIC, new MusicMessage());
+		bulidMessageMap.put(ConstantsWeChat.RESP_MESSAGE_TYPE_TRANSFER_CUSTOMER, new TransferMessage());
 	}
 
 	/**

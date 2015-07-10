@@ -38,6 +38,11 @@ public class ConstantsWeChat {
 	public static final String RESP_MESSAGE_TYPE_NEWS = "news";
 	
 	/**
+	 * 返回消息类型：转发至多客服系统
+	 */
+	public static final String RESP_MESSAGE_TYPE_TRANSFER_CUSTOMER = "transfer_customer_service";
+	
+	/**
 	 * 请求消息类型：文本
 	 */
 	public static final String REQ_MESSAGE_TYPE_TEXT = "text";
