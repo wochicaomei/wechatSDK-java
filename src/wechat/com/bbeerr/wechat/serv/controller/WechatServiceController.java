@@ -180,8 +180,7 @@ public class WechatServiceController {
 				String content = requestMap.get("Content");
 				
 				//消息转发多客服系统示例
-				//respMessage = messageService.bulidSendMessage(transferMessage, ConstantsWeChat.RESP_MESSAGE_TYPE_TRANSFER_CUSTOMER);
-				
+				respMessage = messageService.bulidSendMessage(transferMessage, ConstantsWeChat.RESP_MESSAGE_TYPE_TRANSFER_CUSTOMER);
 				/*	图文消息发送示例
 				 * List<Article> articleList = new ArrayList<Article>();
 				Article article = new Article();

@@ -35,6 +35,10 @@ public class MenuServiceImpl implements IMenuService {
 	public static String MENU_GET = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN";
 
 	/**
+	 * 菜单删除
+	 */
+	public static String MENU_DELETE = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
+	/**
 	 * 创建菜单
 	 * 
 	 * @param jsonMenu
@@ -59,6 +63,24 @@ public class MenuServiceImpl implements IMenuService {
 		return result;
 	}
 
+	/**删除菜单
+	 * @param access_token
+	 * @return 0表示删除成功，1表示删除失败
+	 */
+	public Integer deleteMenu(String access_token){
+		int result = 0;
+		if(access_token != null){
+			String url = MENU_DELETE.replace("ACCESS_TOKEN", access_token);
+			JSONObject jsonObject = WeixinUtil.httpsRequest(url, "GET", null);
+			if(null != jsonObject){
+				if(0 != jsonObject.getInt("errcode")){
+					result = jsonObject.getInt("errcode");
+					System.out.println("删除菜单失败 errcode:" + jsonObject.getInt("errcode") + "，errmsg:" + jsonObject.getString("errmsg"));
+				}
+			}
+		}
+		return result;
+	}
 	/**
 	 * 创建菜单
 	 * 
